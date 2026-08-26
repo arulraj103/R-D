@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Research Records</title>
+  <style>
+:root{--blue:#1d4ed8;--blue-light:#eff6ff;--text:#18202c;--muted:#64748b;--border:#d8dee8;--bg:#f6f8fb;--white:#fff;--red:#b42318;--green:#087443;--radius:7px;font-family:Arial,sans-serif;color:var(--text);background:var(--bg)}*{box-sizing:border-box}body{margin:0;min-width:320px;font-size:14px}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.6}a{color:inherit;text-decoration:none}.page{min-height:100vh}.container,.container-sm{width:min(1080px,100% - 32px);margin:auto}.container-sm{width:min(690px,100% - 32px)}.header{background:var(--white);border-bottom:1px solid var(--border)}.header-inner{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:20px}.header-brand{font-weight:700}.header-brand i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--blue);margin-right:8px}.header nav{display:flex;gap:16px;align-items:center;color:var(--muted)}.page-hero{padding:35px 0 22px}.page-hero h1,.form-card h1{font-size:23px;margin:0}.page-hero p,.form-card>p{color:var(--muted);margin:6px 0}.action-heading{display:flex;gap:18px;align-items:center;justify-content:space-between}.year-grid,.category-grid,.dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:14px}.category-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.category-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.year-card,.category-card,.dashboard-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 1px 3px #18202c0c;text-align:left;padding:18px;transition:border-color .15s,box-shadow .15s}.year-card:hover,.category-card:hover{border-color:var(--blue);box-shadow:0 3px 8px #18202c18}.year-card strong,.category-card strong{font-size:16px;display:block}.year-card span,.category-card span{display:block;margin-top:8px;font-size:12px;color:var(--muted)}.form-card,.records-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:28px;margin:24px 0 36px;box-shadow:0 1px 3px #18202c0b}.centered{text-align:center;margin-top:45px}.year-badge{display:inline-block;background:var(--blue-light);color:var(--blue);border:1px solid #bfdbfe;border-radius:999px;padding:5px 10px;font-size:12px;margin:10px 0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:18px}.field{min-width:0}.field.full{grid-column:1/-1}.field label,.login-form label{display:block;font-weight:600;margin-bottom:6px}.req{color:var(--red)}.field input,.field select,.login-form input,.toolbar input{display:block;width:100%;height:39px;padding:7px 10px;border:1px solid var(--border);border-radius:5px;background:#fff}.field input:focus,.field select:focus,.login-form input:focus,.toolbar input:focus{outline:2px solid #bfdbfe;border-color:var(--blue)}.field input.error{border-color:var(--red)}.field-error{min-height:16px;color:var(--red);font-size:12px;margin:4px 0 0}.author-row{display:flex;gap:8px;margin-bottom:8px}.author-row input{flex:1}.btn{border:0;border-radius:5px;padding:9px 14px;background:#fff;color:var(--text);font-weight:600}.btn-primary{background:var(--blue);color:#fff}.btn-outline{border:1px solid var(--border)}.btn-danger{background:#fee4e2;color:var(--red)}.btn-sm{font-size:12px;padding:6px 9px}.add-author-btn{margin-top:2px;color:var(--blue);background:#fff;border:1px dashed #93c5fd;border-radius:5px;padding:7px 10px}.remove-btn{width:38px;border:1px solid var(--border);border-radius:5px;background:#fff;color:var(--red);font-size:20px}.form-actions{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--border);padding-top:20px;margin-top:25px}.alert{padding:11px 13px;border-radius:5px;margin:0 0 16px}.alert-success{background:#ecfdf3;color:var(--green);border:1px solid #abefc6}.alert-error{background:#fef3f2;color:var(--red);border:1px solid #fecdca}.spinner{display:inline-block;width:13px;height:13px;margin-right:6px;border:2px solid #fff8;border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.dashboard-card h2{margin:0;font-size:18px}.link-heading{padding:0;border:0;background:none;text-align:left}.dashboard-card dl{margin:14px 0}.dashboard-card dl div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eef1f4}.dashboard-card dt{color:var(--muted)}.dashboard-card dd{font-weight:700;margin:0}.toolbar{display:flex;gap:10px;margin-bottom:14px}.toolbar input{width:min(330px,100%)}.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:5px}table{width:100%;border-collapse:collapse;min-width:730px}th,td{padding:11px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}th{font-size:11px;text-transform:uppercase;color:var(--muted);background:#f8fafc}td small{display:block;text-transform:capitalize;color:var(--muted);margin-top:3px}.td-actions{display:flex;gap:5px}.pagination{display:flex;justify-content:flex-end;gap:12px;align-items:center;margin-top:15px;color:var(--muted)}.empty-state{padding:38px;text-align:center;color:var(--muted)}.modal-overlay{position:fixed;inset:0;z-index:2;background:#18202c80;display:grid;place-items:center;padding:20px}.modal{background:#fff;max-width:650px;width:100%;max-height:85vh;overflow:auto;border-radius:9px;padding:24px}.modal h2{margin:0}.record-details{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:18px 0}.record-details div{border-bottom:1px solid var(--border);padding-bottom:8px}.record-details dt{font-size:11px;text-transform:uppercase;color:var(--muted)}.record-details dd{margin:4px 0 0;overflow-wrap:anywhere}.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(390px,100%);background:#fff;border:1px solid var(--border);border-radius:9px;padding:28px;box-shadow:0 4px 14px #18202c14}.login-card h1{margin:0;font-size:21px}.login-card>p{color:var(--muted);margin:5px 0 22px}.brand-mini{font-weight:700!important;color:var(--text)!important;margin-bottom:12px!important}.login-form{display:grid;gap:14px}.login-back{text-align:center;margin-top:20px!important;font-size:13px}.admin-edit-note{text-align:center;background:#eff6ff;color:#1d4ed8;padding:8px;font-size:12px}@media(max-width:650px){.container,.container-sm{width:min(100% - 24px,1080px)}.header-inner{min-height:54px}.header nav{gap:9px}.form-card,.records-card{padding:18px}.form-grid,.record-details,.category-grid.two{grid-template-columns:1fr}.action-heading{align-items:flex-start;flex-direction:column}.form-actions{justify-content:stretch}.form-actions .btn{flex:1}.year-grid{grid-template-columns:1fr 1fr}.toolbar{flex-direction:column}.toolbar input{width:100%}}
+
+/* ── Site Hero ──────────────────────────────────────────────── */
+.site-hero {
+  position: relative;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  padding: 52px 0 44px;
+}
+
+.site-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.045;
+  pointer-events: none;
+}
+
+.site-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  animation: heroFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-hero__inner { animation: none; }
+}
+
+.site-hero__institution {
+  font-size: clamp(17px, 3.5vw, 26px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.site-hero__dept {
+  font-size: clamp(13px, 2.2vw, 17px);
+  font-weight: 500;
+  color: var(--muted);
+  margin: 7px 0 0;
+  letter-spacing: 0.01em;
+}
+
+.site-hero__divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  width: min(340px, 80%);
+}
+
+.site-hero__divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.site-hero__divider-diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--blue);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+
+.site-hero__cell-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 4px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.site-hero__cell-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+}
+
+@media (max-width: 650px) {
+  .site-hero { padding: 36px 0 30px; }
+  .site-hero__divider { margin: 16px 0; }
+}
+
+/* ── Success confirmation page ─────────────────────────────────── */
+.form-card.centered { text-align: center; }
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--green-100, #dcfce7);
+  color: var(--green-700, #15803d);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.success-heading { margin-bottom: 1rem; }
+.success-alert { text-align: left; }
+.success-year { margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted, #6b7280); }
+.success-actions { justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+
+  </style>
+
+  <!-- Supabase configuration: replace these two values with your project values. -->
+  <script>
+    window.SUPABASE_URL = 'https://fhaoxucjcxygyesxhezi.supabase.co';
+    window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoYW94dWNqY3h5Z3llc3hoZXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc2NzE0NjgsImV4cCI6MjEwMzI0NzQ2OH0.iO_YJwlz45d0uvbitdXUWPofN_azK8ik-DNaPsch4mY';
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+const ACADEMIC_YEARS = Object.freeze({
+  '2022-2023': { start: '2022-06-01', end: '2023-05-31' },
+  '2023-2024': { start: '2023-06-01', end: '2024-05-31' },
+  '2024-2025': { start: '2024-06-01', end: '2025-05-31' },
+  '2025-2026': { start: '2025-06-01', end: '2026-05-31' },
+})
+
+const academicYearList = Object.keys(ACADEMIC_YEARS)
+
+function isAcademicYear(value) {
+  return Object.hasOwn(ACADEMIC_YEARS, value)
+}
+
+function rangeForAcademicYear(value) {
+  return ACADEMIC_YEARS[value] || null
+}
+
+function isDateInAcademicYear(value, academicYear) {
+  const range = rangeForAcademicYear(academicYear)
+  return Boolean(range && /^\d{4}-\d{2}-\d{2}$/.test(value || '') && value >= range.start && value <= range.end)
+}
+
+function applyAcademicYearDateRange(root, academicYear) {
+  const range = rangeForAcademicYear(academicYear)
+  if (!range) return
+  root.querySelectorAll('input[type="date"]').forEach((input) => {
+    input.min = range.start
+    input.max = range.end
+  })
+}
+
+
+const supabaseUrl = window.SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = window.SUPABASE_ANON_KEY || 'placeholder'
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey)
+
+const app = document.querySelector('#app')
+const pageSize = 10
+const categories = [
+  { slug: 'faculty-publications', title: 'Faculty Publications', table: 'papers', short: 'Faculty Publications' },
+  { slug: 'patents', title: 'Patents Filed / Published / Granted', table: 'patents', short: 'Patents' },
+  { slug: 'books', title: 'Books / Book Chapters', table: 'books', short: 'Books / Book Chapters' },
+  { slug: 'funded-projects', title: 'Funded Research Projects', table: 'funded_projects', short: 'Funded Research Projects' },
+  { slug: 'consultancy', title: 'Consultancy Projects', table: 'consultancy_projects', short: 'Consultancy Projects' },
+  { slug: 'fdp-training', title: 'Faculty FDPs / Workshops / Research Training Programmes', table: null, short: 'FDPs / Workshops / Training' },
+  { slug: 'student-publications', title: 'Student Publications', table: 'student_publications', short: 'Student Publications' },
+]
+const categoryBySlug = Object.fromEntries(categories.map((category) => [category.slug, category]))
+
+const schemas = {
+  'faculty-publications': { table: 'papers', title: 'Faculty Publication', dates: ['publication_date'], fields: [
+    ['title', 'Title of the Paper', 'text', true], ['authors', 'Author(s)', 'authors', true], ['level', 'Level', 'select', true, ['Journal', 'Conference', 'International', 'National']], ['venue_name', 'Name of Journal or Conference', 'text', true], ['scopus_indexed', 'Scopus Indexed', 'select', true, ['Yes', 'No']], ['quartile', 'Quartile', 'select', true, ['Q1', 'Q2', 'Q3', 'Q4']], ['sci_scie', 'SCI / SCIE', 'select', true, ['SCI', 'SCIE']], ['doi', 'DOI', 'url', false], ['publication_date', 'Publication Date', 'date', true], ['impact_factor', 'Impact Factor', 'number', false, null, { min: 0, step: '0.01' }],
+  ] },
+  patents: { table: 'patents', title: 'Patent', dates: ['filing_date', 'publication_date', 'grant_date'], fields: [
+    ['title', 'Title of the Patent', 'text', true], ['inventors', 'Inventor(s)', 'text', true], ['application_no', 'Application No.', 'text', true], ['filing_date', 'Filing Date', 'date', true], ['publication_no', 'Publication No.', 'text', false], ['grant_no', 'Grant No.', 'text', false], ['publication_date', 'Publication Date', 'date', false], ['grant_date', 'Grant Date', 'date', false], ['patent_type', 'Patent Type', 'select', true, ['Indian', 'International']], ['status', 'Status', 'select', true, ['Filed', 'Published', 'Granted']],
+  ] },
+  books: { table: 'books', title: 'Book / Book Chapter', dates: ['publication_date'], fields: [
+    ['title', 'Title', 'text', true], ['authors', 'Author(s)', 'text', true], ['publisher', 'Publisher', 'text', true], ['isbn', 'ISBN', 'text', true], ['book_type', 'Type', 'select', true, ['Book', 'Book Chapter']], ['publication_date', 'Publication Date', 'date', true],
+  ] },
+  'funded-projects': { table: 'funded_projects', title: 'Funded Research Project', dates: ['sanction_date'], fields: [
+    ['project_title', 'Project Title', 'text', true], ['principal_investigator', 'Principal Investigator', 'text', true], ['co_principal_investigator', 'Co-PI', 'text', false], ['funding_agency', 'Funding Agency', 'select', true, ['DST', 'AICTE', 'UGC', 'ICSSR', 'Other']], ['sanction_no', 'Sanction No.', 'text', true], ['sanction_date', 'Sanction Date', 'date', true], ['amount', 'Amount', 'number', true, null, { min: 0, step: '0.01' }], ['duration', 'Duration', 'text', true], ['status', 'Status', 'select', true, ['Ongoing', 'Completed']],
+  ] },
+  consultancy: { table: 'consultancy_projects', title: 'Consultancy Project', dates: ['start_date', 'complete_date'], fields: [
+    ['client_industry', 'Client / Industry', 'text', true], ['project_title', 'Consultancy Project Title', 'text', true], ['faculty_involved', 'Faculty Involved', 'text', true], ['start_date', 'Start Date', 'date', true], ['complete_date', 'Complete Date', 'date', false], ['amount', 'Amount', 'number', true, null, { min: 0, step: '0.01' }], ['status', 'Status', 'select', true, ['Completed', 'Ongoing']], ['completion_certificate', 'Completion Certificate', 'select', true, ['Yes', 'No']],
+  ] },
+  conducted: { table: 'fdp_conducted', title: 'Conducted FDP / Workshop', dates: ['event_date'], fields: [
+    ['faculty_name', 'Faculty Name', 'text', true], ['title', 'FDP / Workshop Title', 'text', true], ['organizing_institution', 'Organizing Institution', 'text', true], ['duration', 'Duration', 'text', true], ['event_date', 'Date', 'date', true], ['mode', 'Mode', 'select', true, ['Online', 'Offline']], ['certificate', 'Certificate', 'select', true, ['Yes', 'No']],
+  ] },
+  attended: { table: 'fdp_attended', title: 'Attended FDP / Workshop', dates: ['event_date'], fields: [
+    ['title', 'FDP / Workshop Title', 'text', true], ['organizing_institution', 'Organizing Institution', 'text', true], ['duration', 'Duration', 'text', true], ['event_date', 'Date', 'date', true], ['number_of_days', 'Number of Days', 'number', true, null, { min: 1, step: '1' }], ['number_of_participants', 'Number of Participants', 'number', true, null, { min: 1, step: '1' }], ['funded_by', 'Funded By', 'text', true], ['mode', 'Mode', 'select', true, ['Online', 'Offline']],
+  ] },
+  'student-publications': { table: 'student_publications', title: 'Student Publication', dates: ['publication_date'], fields: [
+    ['registration_no', 'Registration No.', 'text', true], ['student_name', 'Student Name', 'text', true], ['programme_year', 'Programme / Year', 'text', true], ['paper_title', 'Paper Title', 'text', true], ['level', 'Level', 'select', true, ['Journal', 'Conference', 'International', 'National']], ['indexed_in', 'Indexed In', 'select', true, ['Scopus', 'Web of Science', 'Other']], ['doi', 'DOI', 'url', false], ['publication_date', 'Publication Date', 'date', true],
+  ] },
+}
+
+function escapeHtml(value = '') { return String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]) }
+function go(path) { const hash = path.startsWith('#') ? path : `#${path.startsWith('/') ? path : '/' + path}`; if (location.hash === hash) render(); else location.hash = hash }
+function back(path) { return `<button class="btn btn-outline" data-go="${path}">← Back</button>` }
+function header(isAdmin = false) { return `<header class="header"><div class="container header-inner"><a href="#/academic-years" data-go="/academic-years" class="header-brand"><i></i>Academic Research Records</a><nav>${isAdmin ? '<a href="#/admin/dashboard" data-go="/admin/dashboard">Dashboard</a><button class="btn btn-outline btn-sm" data-action="logout">Sign out</button>' : '<a href="#/admin/login" data-go="/admin/login">Admin</a>'}</nav></div></header>` }
+function shell(content, isAdmin = false) { return `<div class="page">${header(isAdmin)}${content}</div>` }
+function invalidYear(year, isAdmin = false) { app.innerHTML = shell(`<main class="container-sm"><section class="form-card centered"><h1>Invalid academic year</h1><p>${escapeHtml(year)} is not an available academic year.</p>${back(isAdmin ? '/admin/dashboard' : '/academic-years')}</section></main>`, isAdmin) }
+function titleCase(key) { return key.replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase()) }
+
+function siteHero() {
+  return `<section class="site-hero">
+    <svg class="site-hero__bg" viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1d4ed8" stroke-width="0.8"/>
+        </pattern>
+        <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="40" cy="40" r="1.5" fill="#1d4ed8"/>
+        </pattern>
+      </defs>
+      <rect width="1200" height="320" fill="url(#grid)"/>
+      <rect width="1200" height="320" fill="url(#dots)"/>
+      <line x1="0" y1="0" x2="120" y2="0" stroke="#1d4ed8" stroke-width="2"/>
+      <line x1="0" y1="0" x2="0" y2="80" stroke="#1d4ed8" stroke-width="2"/>
+      <line x1="1200" y1="320" x2="1080" y2="320" stroke="#1d4ed8" stroke-width="2"/>
+      <line x1="1200" y1="320" x2="1200" y2="240" stroke="#1d4ed8" stroke-width="2"/>
+    </svg>
+    <div class="container site-hero__inner">
+      <h1 class="site-hero__institution">PA College of Engineering and Technology, Pollachi</h1>
+      <p class="site-hero__dept">Department of Mechanical Engineering</p>
+      <div class="site-hero__divider">
+        <span class="site-hero__divider-line"></span>
+        <span class="site-hero__divider-diamond"></span>
+        <span class="site-hero__divider-line"></span>
+      </div>
+      <span class="site-hero__cell-tag">
+        <span class="site-hero__cell-dot"></span>
+        Research and Development Cell (R&amp;D)
+      </span>
+    </div>
+  </section>`
+}
+
+function yearSelection() {
+  app.innerHTML = shell(`${siteHero()}<main class="container"><section class="page-hero"><h1>Academic Years</h1><p>Select an academic year to register research and publication records.</p></section><section class="year-grid">${academicYearList.map((year) => `<button class="year-card" data-go="/academic-year/${year}"><strong>${year}</strong><span>${rangeForAcademicYear(year).start} to ${rangeForAcademicYear(year).end}</span></button>`).join('')}</section></main>`)
+}
+
+function categoryPage(year) {
+  if (!isAcademicYear(year)) return invalidYear(year)
+  app.innerHTML = shell(`<main class="container"><section class="page-hero action-heading"><div><h1>${year}</h1><p>Choose a research-record category.</p></div>${back('/academic-years')}</section><section class="category-grid">${categories.map((category) => `<button class="category-card" data-go="/academic-year/${year}/${category.slug}"><strong>${category.title}</strong><span>Open record form →</span></button>`).join('')}</section></main>`)
+}
+
+function fdpChoice(year) {
+  if (!isAcademicYear(year)) return invalidYear(year)
+  app.innerHTML = shell(`<main class="container-sm"><section class="page-hero action-heading"><div><h1>FDPs / Workshops / Training</h1><p>${year}</p></div>${back(`/academic-year/${year}`)}</section><section class="category-grid two"><button class="category-card" data-go="/academic-year/${year}/fdp-training/conducted"><strong>Conducted</strong><span>Register a programme conducted by faculty →</span></button><button class="category-card" data-go="/academic-year/${year}/fdp-training/attended"><strong>Attended</strong><span>Register programme attendance →</span></button></section></main>`)
+}
+
+function fieldMarkup(field, value) {
+  const [name, label, type, required, options, attrs = {}] = field
+  const requiredMark = required ? ' <b class="req">*</b>' : ''
+  if (type === 'authors') return `<div class="field full"><label>${label}${requiredMark}</label><div id="authors-list"></div><p class="field-error" data-error="authors"></p><button type="button" class="add-author-btn" data-action="add-author">+ Add Author</button></div>`
+  const attributes = Object.entries(attrs).map(([key, attributeValue]) => `${key}="${attributeValue}"`).join(' ')
+  if (type === 'select') { const selectedValue = name === 'scopus_indexed' && typeof value === 'boolean' ? (value ? 'Yes' : 'No') : (value || options[0]); return `<div class="field"><label for="${name}">${label}${requiredMark}</label><select id="${name}" name="${name}" ${required ? 'required' : ''}>${options.map((option) => `<option value="${escapeHtml(option)}" ${String(selectedValue) === option ? 'selected' : ''}>${escapeHtml(option)}</option>`).join('')}</select><p class="field-error" data-error="${name}"></p></div>` }
+  return `<div class="field"><label for="${name}">${label}${requiredMark}</label><input id="${name}" name="${name}" type="${type}" value="${escapeHtml(value ?? '')}" ${required ? 'required' : ''} ${attributes}><p class="field-error" data-error="${name}"></p></div>`
+}
+
+function renderAuthors(values = ['']) {
+  const list = document.querySelector('#authors-list')
+  if (!list) return
+  list.innerHTML = values.map((value, index) => `<div class="author-row"><input type="text" name="authors" value="${escapeHtml(value)}" placeholder="Author ${index + 1}" required>${values.length > 1 ? `<button type="button" class="remove-btn" data-action="remove-author" data-index="${index}" aria-label="Remove author">×</button>` : ''}</div>`).join('')
+  document.querySelector('[data-action="add-author"]')?.toggleAttribute('disabled', values.length >= 4)
+}
+
+function formPage(year, slug, initialData = null, onSaved = null) {
+  const schema = schemas[slug]
+  if (!isAcademicYear(year)) return invalidYear(year)
+  if (!schema) { go(`/academic-year/${year}`); return }
+  const edit = Boolean(initialData)
+  app.innerHTML = shell(`<main class="container-sm"><section class="form-card"><div class="action-heading"><div><h1>${edit ? `Edit ${schema.title}` : schema.title}</h1><p class="year-badge">Academic year: ${year}</p></div>${back(slug === 'conducted' || slug === 'attended' ? `/academic-year/${year}/fdp-training` : `/academic-year/${year}`)}</div><div id="form-message" role="alert"></div><form id="record-form" novalidate><input type="hidden" name="academic_year" value="${year}"><div class="form-grid">${schema.fields.map((field) => fieldMarkup(field, initialData?.[field[0]])).join('')}</div><div class="form-actions"><button type="button" class="btn btn-outline" data-go="${slug === 'conducted' || slug === 'attended' ? `/academic-year/${year}/fdp-training` : `/academic-year/${year}`}">Cancel</button><button class="btn btn-primary" type="submit">${edit ? 'Save changes' : 'Save record'}</button></div></form></section></main>`)
+  if (slug === 'faculty-publications') renderAuthors(initialData?.authors || [''])
+  applyAcademicYearDateRange(app, year)
+  document.querySelector('#record-form').addEventListener('submit', (event) => saveForm(event, year, slug, initialData?.id, onSaved))
+}
+
+function showFormMessage(kind, message) { const node = document.querySelector('#form-message'); if (node) node.innerHTML = `<div class="alert alert-${kind}">${escapeHtml(message)}</div>` }
+
+const successMessages = {
+  'faculty-publications': 'Paper registered successfully.',
+  patents: 'Patent registered successfully.',
+  books: 'Book / Book Chapter registered successfully.',
+  'funded-projects': 'Funded research project saved successfully.',
+  consultancy: 'Consultancy project saved successfully.',
+  conducted: 'FDP / Workshop / Training programme saved successfully.',
+  attended: 'FDP / Workshop / Training programme saved successfully.',
+  'student-publications': 'Student publication registered successfully.',
+}
+
+function showSuccessPage(year, slug) {
+  const message = successMessages[slug] || 'Record saved successfully.'
+  const isFacultyPub = slug === 'faculty-publications'
+  const addLabel = isFacultyPub ? 'Register another paper' : 'Add another record'
+  const backPath = slug === 'conducted' || slug === 'attended' ? `/academic-year/${year}/fdp-training` : `/academic-year/${year}`
+  app.innerHTML = shell(`<main class="container-sm"><section class="form-card centered"><div class="success-icon" aria-hidden="true">✓</div><h1 class="success-heading">Success</h1><div class="alert alert-success success-alert"><p>${escapeHtml(message)}</p><p class="success-year">Academic year: ${escapeHtml(year)}</p></div><div class="form-actions success-actions"><button class="btn btn-primary" data-go="/academic-year/${year}/${slug === 'conducted' || slug === 'attended' ? `fdp-training/${slug}` : slug}">${escapeHtml(addLabel)}</button><button class="btn btn-outline" data-go="${backPath}">← Back to category</button></div></section></main>`)
+}
+function clearErrors(form) { form.querySelectorAll('.field-error').forEach((node) => { node.textContent = '' }); form.querySelectorAll('.error').forEach((node) => node.classList.remove('error')) }
+function setFieldError(form, name, message) { form.querySelector(`[data-error="${name}"]`)?.append(message); form.elements[name]?.classList.add('error') }
+function formDataFor(schema, form) {
+  const data = { academic_year: form.elements.academic_year.value }
+  schema.fields.forEach(([name, , type]) => {
+    if (type === 'authors') data.authors = [...form.querySelectorAll('input[name="authors"]')].map((input) => input.value.trim()).filter(Boolean)
+    else { const rawValue = form.elements[name].value.trim(); data[name] = type === 'date' && rawValue === '' ? null : rawValue }
+  })
+  if (data.scopus_indexed) data.scopus_indexed = data.scopus_indexed === 'Yes'
+  ;['amount', 'impact_factor', 'number_of_days', 'number_of_participants'].forEach((key) => { if (data[key] !== undefined && data[key] !== '') data[key] = Number(data[key]); else if (data[key] === '') data[key] = null })
+  return data
+}
+function validateRecord(schema, data, form) {
+  let valid = true; clearErrors(form)
+  schema.fields.forEach(([name, label, type, required]) => {
+    const value = data[name]
+    if (required && (value === '' || value === null || (Array.isArray(value) && !value.length))) { setFieldError(form, name, `${label} is required.`); valid = false }
+    if (type === 'date' && value && !isDateInAcademicYear(value, data.academic_year)) { setFieldError(form, name, `Date must be between ${rangeForAcademicYear(data.academic_year).start} and ${rangeForAcademicYear(data.academic_year).end}.`); valid = false }
+    if (type === 'number' && value !== null && (!Number.isFinite(value) || value < 0)) { setFieldError(form, name, `${label} must be a non-negative number.`); valid = false }
+  })
+  if (data.status === 'Completed' && !data.complete_date) { setFieldError(form, 'complete_date', 'Complete Date is required for completed projects.'); valid = false }
+  if (data.doi && !/^https?:\/\/.+/.test(data.doi)) { setFieldError(form, 'doi', 'DOI must be a valid URL beginning with http:// or https://.'); valid = false }
+  if (data.doi === '') data.doi = null
+  return valid
+}
+async function saveForm(event, year, slug, recordId, onSaved) {
+  event.preventDefault()
+  const form = event.currentTarget; const schema = schemas[slug]; const data = formDataFor(schema, form)
+  if (!validateRecord(schema, data, form)) { showFormMessage('error', 'Please correct the highlighted fields.'); return }
+  const submit = form.querySelector('[type="submit"]'); submit.disabled = true; submit.innerHTML = '<span class="spinner"></span> Saving…'; showFormMessage('', '')
+  const request = recordId ? supabaseClient.from(schema.table).update(data).eq('id', recordId).eq('academic_year', year) : supabaseClient.from(schema.table).insert(data)
+  const { error } = await request
+  if (error) { showFormMessage('error', error.message || 'The record could not be saved.'); submit.disabled = false; submit.textContent = recordId ? 'Save changes' : 'Save record'; return }
+  if (onSaved) { onSaved(); return }
+  showSuccessPage(year, slug)
+}
+
+async function loginPage() {
+  app.innerHTML = `<main class="login-wrap"><section class="login-card"><p class="brand-mini">Academic Research Records</p><h1>Admin Sign In</h1><p>Manage academic-year records.</p><div id="login-message"></div><form id="login-form" class="login-form"><label>Email<input name="email" type="email" required autocomplete="email"></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><button class="btn btn-primary" type="submit">Sign in</button></form><p class="login-back"><a href="#/academic-years" data-go="/academic-years">← Back to academic years</a></p></section></main>`
+  document.querySelector('#login-form').addEventListener('submit', async (event) => { event.preventDefault(); const form = event.currentTarget; const button = form.querySelector('button'); button.disabled = true; button.textContent = 'Signing in…'; const { error } = await supabaseClient.auth.signInWithPassword({ email: form.email.value, password: form.password.value }); if (error) { document.querySelector('#login-message').innerHTML = `<div class="alert alert-error">${escapeHtml(error.message)}</div>`; button.disabled = false; button.textContent = 'Sign in' } else go('/admin/dashboard') })
+}
+
+async function requireAdmin(renderPage) { const { data } = await supabaseClient.auth.getSession(); if (!data.session) { go('/admin/login'); return } renderPage() }
+async function adminDashboard() {
+  app.innerHTML = shell(`<main class="container"><section class="page-hero"><h1>Admin Dashboard</h1><p>Loading academic-year totals…</p></section></main>`, true)
+  const counts = {}; await Promise.all(academicYearList.map(async (year) => { counts[year] = {}; await Promise.all(categories.map(async (category) => { if (category.slug === 'fdp-training') { const results = await Promise.all(['fdp_conducted', 'fdp_attended'].map((table) => supabaseClient.from(table).select('id', { count: 'exact', head: true }).eq('academic_year', year))); counts[year][category.slug] = results.reduce((sum, result) => sum + (result.count || 0), 0) } else { const { count } = await supabaseClient.from(category.table).select('id', { count: 'exact', head: true }).eq('academic_year', year); counts[year][category.slug] = count || 0 } })) }))
+  app.innerHTML = shell(`<main class="container"><section class="page-hero"><h1>Admin Dashboard</h1><p>Database totals, grouped by academic year.</p></section><section class="dashboard-grid">${academicYearList.map((year) => `<article class="dashboard-card"><button class="link-heading" data-go="/admin/${year}"><h2>${year}</h2></button><dl>${categories.map((category) => `<div><dt>${category.short}</dt><dd>${counts[year][category.slug] || 0}</dd></div>`).join('')}</dl><button class="btn btn-outline btn-sm" data-go="/admin/${year}">Open categories</button></article>`).join('')}</section></main>`, true)
+}
+
+function adminYearCategories(year) {
+  if (!isAcademicYear(year)) return invalidYear(year, true)
+  app.innerHTML = shell(`<main class="container"><section class="page-hero action-heading"><div><h1>${year} records</h1><p>Select a category to search, review, edit, or delete records for this academic year.</p></div>${back('/admin/dashboard')}</section><section class="category-grid">${categories.map((category) => `<button class="category-card" data-go="/admin/${year}/${category.slug}"><strong>${category.title}</strong><span>Open ${year} records →</span></button>`).join('')}</section></main>`, true)
+}
+
+function rowTitle(record, slug) { return record.title || record.paper_title || record.project_title || `${record.client_industry || ''} ${record.faculty_name || ''}`.trim() || 'Record' }
+async function adminRecords(year, slug) {
+  if (!isAcademicYear(year)) return invalidYear(year, true)
+  const category = categoryBySlug[slug]
+  if (!category) return go('/admin/dashboard')
+  if (slug === 'fdp-training') return adminFdpRecords(year)
+  const schema = schemas[slug]
+  app.innerHTML = shell(`<main class="container"><section class="page-hero"><h1>${category.short} — ${year}</h1><p>Loading records…</p></section></main>`, true)
+  const { data, error } = await supabaseClient.from(schema.table).select('*').eq('academic_year', year).order('created_at', { ascending: false })
+  if (error) return adminError(year, category.short, error.message)
+  renderRecords(year, slug, data || [])
+}
+async function adminFdpRecords(year) {
+  app.innerHTML = shell(`<main class="container"><section class="page-hero"><h1>FDPs / Workshops / Training — ${year}</h1><p>Loading records…</p></section></main>`, true)
+  const [conducted, attended] = await Promise.all(['conducted', 'attended'].map(async (kind) => { const { data, error } = await supabaseClient.from(schemas[kind].table).select('*').eq('academic_year', year).order('created_at', { ascending: false }); return { kind, data, error } }))
+  const failure = [conducted, attended].find((result) => result.error); if (failure) return adminError(year, 'FDPs / Workshops / Training', failure.error.message)
+  renderRecords(year, 'fdp-training', [...conducted.data.map((record) => ({ ...record, _kind: 'conducted' })), ...attended.data.map((record) => ({ ...record, _kind: 'attended' }))])
+}
+function adminError(year, title, message) { app.innerHTML = shell(`<main class="container"><section class="form-card"><h1>${escapeHtml(title)}</h1><div class="alert alert-error">${escapeHtml(message)}</div>${back('/admin/dashboard')}</section></main>`, true) }
+function renderRecords(year, slug, rows) {
+  const category = categoryBySlug[slug] || categoryBySlug['fdp-training']; let state = { query: '', sort: 'newest', page: 1 }
+  function paint() {
+    const query = state.query.toLowerCase(); const filtered = rows.filter((row) => JSON.stringify(row).toLowerCase().includes(query)).sort((a, b) => { const av = a.created_at || ''; const bv = b.created_at || ''; return state.sort === 'newest' ? bv.localeCompare(av) : av.localeCompare(bv) }); const pages = Math.max(1, Math.ceil(filtered.length / pageSize)); state.page = Math.min(state.page, pages); const shown = filtered.slice((state.page - 1) * pageSize, state.page * pageSize)
+    app.innerHTML = shell(`<main class="container"><section class="page-hero action-heading"><div><h1>${category.short} — ${year}</h1><p>${filtered.length} record${filtered.length === 1 ? '' : 's'} (database query is restricted to this academic year)</p></div>${back('/admin/dashboard')}</section><section class="records-card"><div class="toolbar"><input id="record-search" type="search" placeholder="Search this academic year" value="${escapeHtml(state.query)}"><button class="btn btn-outline btn-sm" data-action="sort">${state.sort === 'newest' ? 'Newest first' : 'Oldest first'}</button></div>${shown.length ? `<div class="table-wrap"><table><thead><tr><th>Record</th><th>Details</th><th>Date</th><th>Actions</th></tr></thead><tbody>${shown.map((row, index) => { const date = Object.entries(row).find(([key, value]) => key.endsWith('_date') && value)?.[1] || '—'; const details = Object.entries(row).filter(([key]) => !['id', 'academic_year', 'created_at', 'updated_at', 'title', 'paper_title', 'project_title'].includes(key) && !key.endsWith('_date')).slice(0, 3).map(([key, value]) => `${titleCase(key)}: ${Array.isArray(value) ? value.join(', ') : value}`).join(' · '); return `<tr><td>${escapeHtml(rowTitle(row, slug))}${row._kind ? `<small>${row._kind}</small>` : ''}</td><td>${escapeHtml(details)}</td><td>${escapeHtml(date)}</td><td class="td-actions"><button class="btn btn-outline btn-sm" data-action="view" data-index="${index}">View</button><button class="btn btn-outline btn-sm" data-action="edit" data-index="${index}">Edit</button><button class="btn btn-danger btn-sm" data-action="delete" data-index="${index}">Delete</button></td></tr>` }).join('')}</tbody></table></div>` : '<div class="empty-state">No matching records for this academic year.</div>'}<div class="pagination"><button class="btn btn-outline btn-sm" data-action="previous" ${state.page === 1 ? 'disabled' : ''}>Previous</button><span>Page ${state.page} of ${pages}</span><button class="btn btn-outline btn-sm" data-action="next" ${state.page === pages ? 'disabled' : ''}>Next</button></div></section></main>`, true)
+    document.querySelector('#record-search').addEventListener('input', (event) => { state.query = event.target.value; state.page = 1; paint() })
+    app.querySelector('[data-action="sort"]').onclick = () => { state.sort = state.sort === 'newest' ? 'oldest' : 'newest'; paint() }
+    app.querySelector('[data-action="previous"]').onclick = () => { state.page--; paint() }; app.querySelector('[data-action="next"]').onclick = () => { state.page++; paint() }
+    app.querySelectorAll('[data-action="view"]').forEach((button) => { button.onclick = () => viewRecord(shown[Number(button.dataset.index)]) })
+    app.querySelectorAll('[data-action="edit"]').forEach((button) => { button.onclick = () => { const row = shown[Number(button.dataset.index)]; openAdminEdit(year, slug, row) } })
+    app.querySelectorAll('[data-action="delete"]').forEach((button) => { button.onclick = () => deleteRecord(year, slug, shown[Number(button.dataset.index)]) })
+  }
+  paint()
+}
+function viewRecord(record) { const modal = document.createElement('div'); modal.className = 'modal-overlay'; modal.innerHTML = `<section class="modal"><div class="action-heading"><h2>Record details</h2><button class="btn btn-outline btn-sm" data-action="close">Close</button></div><dl class="record-details">${Object.entries(record).filter(([key]) => !['id', 'created_at', 'updated_at'].includes(key)).map(([key, value]) => `<div><dt>${titleCase(key)}</dt><dd>${escapeHtml(Array.isArray(value) ? value.join(', ') : value ?? '—')}</dd></div>`).join('')}</dl></section>`; document.body.append(modal); modal.addEventListener('click', (event) => { if (event.target === modal || event.target.dataset.action === 'close') modal.remove() }) }
+function openAdminEdit(year, slug, record) { const kind = record._kind || slug; const schema = schemas[kind]; if (!schema) return; const previous = app.innerHTML; formPage(year, kind, record, () => { render(); }); document.querySelector('.header').insertAdjacentHTML('afterend', '<div class="admin-edit-note">Editing in admin mode. Saving keeps the current academic-year filter.</div>') }
+async function deleteRecord(year, slug, record) { if (!confirm(`Delete “${rowTitle(record, slug)}”? This cannot be undone.`)) return; const kind = record._kind || slug; const { error } = await supabaseClient.from(schemas[kind].table).delete().eq('id', record.id).eq('academic_year', year); if (error) { alert(error.message); return } render() }
+
+async function logout() { await supabaseClient.auth.signOut(); go('/admin/login') }
+async function render() {
+  const route = (location.hash || '#/academic-years').replace(/^#/, '')
+  const parts = route.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean)
+  if (!parts.length || (parts[0] === 'register')) return go('/academic-years')
+  if (parts[0] === 'academic-years') return yearSelection()
+  if (parts[0] === 'academic-year') { if (parts.length === 2) return categoryPage(parts[1]); if (parts[2] === 'fdp-training' && parts.length === 3) return fdpChoice(parts[1]); return formPage(parts[1], parts[3] || parts[2]) }
+  if (parts[0] === 'admin' && parts[1] === 'login') return loginPage()
+  if (parts[0] === 'admin' && parts[1] === 'dashboard') return requireAdmin(adminDashboard)
+  if (parts[0] === 'admin' && parts.length === 2) return requireAdmin(() => adminYearCategories(parts[1]))
+  if (parts[0] === 'admin' && parts.length === 3) return requireAdmin(() => adminRecords(parts[1], parts[2]))
+  go('/academic-years')
+}
+
+document.addEventListener('click', (event) => { const target = event.target.closest('[data-go]'); if (target) { event.preventDefault(); go(target.dataset.go) } if (event.target.dataset.action === 'logout') logout(); if (event.target.dataset.action === 'add-author') { const values = [...document.querySelectorAll('input[name="authors"]')].map((input) => input.value); if (values.length < 4) renderAuthors([...values, '']) } if (event.target.dataset.action === 'remove-author') { const values = [...document.querySelectorAll('input[name="authors"]')].map((input) => input.value); values.splice(Number(event.target.dataset.index), 1); renderAuthors(values) } })
+window.addEventListener('hashchange', render)
+render()
+
+  </script>
+</body>
+</html>
