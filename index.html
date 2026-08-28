@@ -110,6 +110,21 @@
   .site-hero__divider { margin: 16px 0; }
 }
 
+/* ── Download UI ──────────────────────────────────────────────── */
+.btn-success{background:#087443;color:#fff;border:0}
+.btn-success:hover{background:#065f32}
+.download-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 16px;background:#f0fdf4;border:1px solid #abefc6;border-radius:6px;margin-bottom:16px}
+.download-bar label{font-weight:600;color:#065f32;font-size:13px;white-space:nowrap}
+.download-bar select{height:35px;padding:5px 8px;border:1px solid #abefc6;border-radius:5px;background:#fff;font:inherit;min-width:160px}
+.download-section{background:#fff;border:1px solid var(--border);border-radius:10px;padding:22px;margin:0 0 22px;box-shadow:0 1px 3px #18202c0b}
+.download-section h2{margin:0 0 4px;font-size:16px}
+.download-section p{margin:0 0 14px;color:var(--muted);font-size:13px}
+.download-section .row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.download-section .row select{height:35px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:#fff;font:inherit;min-width:160px}
+.dl-spinner{display:none;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+.dl-spinner.active{display:flex}
+.dl-spinner .spinner{border-color:#64748b4d;border-top-color:var(--blue)}
+
 /* ── Success confirmation page ─────────────────────────────────── */
 .form-card.centered { text-align: center; }
 .success-icon {
@@ -138,6 +153,7 @@
     window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZoYW94dWNqY3h5Z3llc3hoZXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc2NzE0NjgsImV4cCI6MjEwMzI0NzQ2OH0.iO_YJwlz45d0uvbitdXUWPofN_azK8ik-DNaPsch4mY';
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <div id="app"></div>
@@ -367,7 +383,59 @@ async function requireAdmin(renderPage) { const { data } = await supabaseClient.
 async function adminDashboard() {
   app.innerHTML = shell(`<main class="container"><section class="page-hero"><h1>Admin Dashboard</h1><p>Loading academic-year totals…</p></section></main>`, true)
   const counts = {}; await Promise.all(academicYearList.map(async (year) => { counts[year] = {}; await Promise.all(categories.map(async (category) => { if (category.slug === 'fdp-training') { const results = await Promise.all(['fdp_conducted', 'fdp_attended'].map((table) => supabaseClient.from(table).select('id', { count: 'exact', head: true }).eq('academic_year', year))); counts[year][category.slug] = results.reduce((sum, result) => sum + (result.count || 0), 0) } else { const { count } = await supabaseClient.from(category.table).select('id', { count: 'exact', head: true }).eq('academic_year', year); counts[year][category.slug] = count || 0 } })) }))
-  app.innerHTML = shell(`<main class="container"><section class="page-hero"><h1>Admin Dashboard</h1><p>Database totals, grouped by academic year.</p></section><section class="dashboard-grid">${academicYearList.map((year) => `<article class="dashboard-card"><button class="link-heading" data-go="/admin/${year}"><h2>${year}</h2></button><dl>${categories.map((category) => `<div><dt>${category.short}</dt><dd>${counts[year][category.slug] || 0}</dd></div>`).join('')}</dl><button class="btn btn-outline btn-sm" data-go="/admin/${year}">Open categories</button></article>`).join('')}</section></main>`, true)
+
+  const yearOpts = academicYearList.map((y) => `<option value="${y}">${y}</option>`).join('')
+  const catOpts = categories.map((c) => `<option value="${c.slug}">${c.short}</option>`).join('')
+
+  app.innerHTML = shell(`<main class="container">
+    <section class="page-hero"><h1>Admin Dashboard</h1><p>Database totals, grouped by academic year.</p></section>
+
+    <!-- ── Download Panel ── -->
+    <section class="download-section">
+      <h2>📥 Download Records</h2>
+      <p>Export submissions to Excel (.xlsx). Choose year-wise or category-wise.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px">
+
+        <!-- Year-wise -->
+        <div style="border:1px solid var(--border);border-radius:7px;padding:16px;background:#f8fafc">
+          <div style="font-weight:700;margin-bottom:6px">Year-wise Download</div>
+          <p style="font-size:12px;color:var(--muted);margin:0 0 12px">Downloads all categories for the selected year as a multi-sheet Excel file.</p>
+          <div class="row" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+            <select id="dl-year-select" style="height:35px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:#fff;font:inherit;min-width:130px">${yearOpts}</select>
+            <button id="dl-year-btn" class="btn btn-success btn-sm">⬇ Download Year</button>
+          </div>
+        </div>
+
+        <!-- Category-wise -->
+        <div style="border:1px solid var(--border);border-radius:7px;padding:16px;background:#f8fafc">
+          <div style="font-weight:700;margin-bottom:6px">Category-wise Download</div>
+          <p style="font-size:12px;color:var(--muted);margin:0 0 12px">Select a year and a category to download only that category's records.</p>
+          <div class="row" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+            <select id="dl-cat-year-select" style="height:35px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:#fff;font:inherit;min-width:130px">${yearOpts}</select>
+            <select id="dl-cat-select" style="height:35px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;background:#fff;font:inherit;min-width:180px">${catOpts}</select>
+            <button id="dl-cat-btn" class="btn btn-success btn-sm">⬇ Download Category</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Year cards ── -->
+    <section class="dashboard-grid">${academicYearList.map((year) => `<article class="dashboard-card"><button class="link-heading" data-go="/admin/${year}"><h2>${year}</h2></button><dl>${categories.map((category) => `<div><dt>${category.short}</dt><dd>${counts[year][category.slug] || 0}</dd></div>`).join('')}</dl><button class="btn btn-outline btn-sm" data-go="/admin/${year}">Open categories</button></article>`).join('')}</section>
+  </main>`, true)
+
+  /* Year-wise download handler */
+  document.querySelector('#dl-year-btn').addEventListener('click', function() {
+    const year = document.querySelector('#dl-year-select').value
+    downloadFullYear(year, this)
+  })
+
+  /* Category-wise download handler */
+  document.querySelector('#dl-cat-btn').addEventListener('click', function() {
+    const year = document.querySelector('#dl-cat-year-select').value
+    const slug = document.querySelector('#dl-cat-select').value
+    downloadCategoryYear(slug, year, this)
+  })
 }
 
 function adminYearCategories(year) {
@@ -376,6 +444,94 @@ function adminYearCategories(year) {
 }
 
 function rowTitle(record, slug) { return record.title || record.paper_title || record.project_title || `${record.client_industry || ''} ${record.faculty_name || ''}`.trim() || 'Record' }
+
+/* ─── Excel download helpers ─────────────────────────────── */
+function sanitiseRows(rows) {
+  return rows.map((row) => {
+    const out = {}
+    Object.entries(row).forEach(([k, v]) => {
+      if (['id', 'created_at', 'updated_at'].includes(k)) return
+      out[titleCase(k)] = Array.isArray(v) ? v.join(', ') : (v ?? '')
+    })
+    return out
+  })
+}
+
+function downloadXlsx(rows, sheetName, filename) {
+  if (!rows || rows.length === 0) { alert('No records found for the selected filter.'); return }
+  const wb = XLSX.utils.book_new()
+  const ws = XLSX.utils.json_to_sheet(sanitiseRows(rows))
+  /* auto column widths */
+  const keys = Object.keys(sanitiseRows([rows[0]])[0])
+  ws['!cols'] = keys.map((k) => ({ wch: Math.min(50, Math.max(k.length + 2, 14)) }))
+  XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0, 31))
+  XLSX.writeFile(wb, filename)
+}
+
+async function fetchAllForSlug(slug, year) {
+  if (slug === 'fdp-training') {
+    const [c, a] = await Promise.all(['conducted', 'attended'].map(async (kind) => {
+      const { data } = await supabaseClient.from(schemas[kind].table).select('*').eq('academic_year', year).order('created_at', { ascending: false })
+      return (data || []).map((r) => ({ ...r, _kind: kind }))
+    }))
+    return [...c, ...a]
+  }
+  const schema = schemas[slug]
+  if (!schema) return []
+  const { data } = await supabaseClient.from(schema.table).select('*').eq('academic_year', year).order('created_at', { ascending: false })
+  return data || []
+}
+
+function categoryLabel(slug) {
+  return (categoryBySlug[slug] || {}).short || slug
+}
+
+/* Download a single row immediately */
+function downloadSingleRecord(record, slug, year) {
+  const label = categoryLabel(slug)
+  const safe = (rowTitle(record, slug) || 'record').replace(/[^a-z0-9]/gi, '_').slice(0, 40)
+  downloadXlsx([record], label, `${year}_${label}_${safe}.xlsx`)
+}
+
+/* Download all records for a year + category */
+async function downloadCategoryYear(slug, year, btnEl) {
+  btnEl.disabled = true
+  const orig = btnEl.textContent
+  btnEl.innerHTML = '<span class="spinner"></span> Downloading…'
+  try {
+    const rows = await fetchAllForSlug(slug, year)
+    const label = categoryLabel(slug)
+    downloadXlsx(rows, label, `${year}_${label}.xlsx`)
+  } finally {
+    btnEl.disabled = false
+    btnEl.textContent = orig
+  }
+}
+
+/* Download all records for an entire academic year (all categories, multi-sheet) */
+async function downloadFullYear(year, btnEl) {
+  btnEl.disabled = true
+  const orig = btnEl.textContent
+  btnEl.innerHTML = '<span class="spinner"></span> Downloading…'
+  try {
+    const wb = XLSX.utils.book_new()
+    let anyData = false
+    for (const cat of categories) {
+      const rows = await fetchAllForSlug(cat.slug, year)
+      if (rows.length === 0) continue
+      anyData = true
+      const ws = XLSX.utils.json_to_sheet(sanitiseRows(rows))
+      const keys = Object.keys(sanitiseRows([rows[0]])[0])
+      ws['!cols'] = keys.map((k) => ({ wch: Math.min(50, Math.max(k.length + 2, 14)) }))
+      XLSX.utils.book_append_sheet(wb, ws, cat.short.slice(0, 31))
+    }
+    if (!anyData) { alert('No records found for ' + year + '.'); return }
+    XLSX.writeFile(wb, `${year}_All_Records.xlsx`)
+  } finally {
+    btnEl.disabled = false
+    btnEl.textContent = orig
+  }
+}
 async function adminRecords(year, slug) {
   if (!isAcademicYear(year)) return invalidYear(year, true)
   const category = categoryBySlug[slug]
@@ -398,13 +554,18 @@ function renderRecords(year, slug, rows) {
   const category = categoryBySlug[slug] || categoryBySlug['fdp-training']; let state = { query: '', sort: 'newest', page: 1 }
   function paint() {
     const query = state.query.toLowerCase(); const filtered = rows.filter((row) => JSON.stringify(row).toLowerCase().includes(query)).sort((a, b) => { const av = a.created_at || ''; const bv = b.created_at || ''; return state.sort === 'newest' ? bv.localeCompare(av) : av.localeCompare(bv) }); const pages = Math.max(1, Math.ceil(filtered.length / pageSize)); state.page = Math.min(state.page, pages); const shown = filtered.slice((state.page - 1) * pageSize, state.page * pageSize)
-    app.innerHTML = shell(`<main class="container"><section class="page-hero action-heading"><div><h1>${category.short} — ${year}</h1><p>${filtered.length} record${filtered.length === 1 ? '' : 's'} (database query is restricted to this academic year)</p></div>${back('/admin/dashboard')}</section><section class="records-card"><div class="toolbar"><input id="record-search" type="search" placeholder="Search this academic year" value="${escapeHtml(state.query)}"><button class="btn btn-outline btn-sm" data-action="sort">${state.sort === 'newest' ? 'Newest first' : 'Oldest first'}</button></div>${shown.length ? `<div class="table-wrap"><table><thead><tr><th>Record</th><th>Details</th><th>Date</th><th>Actions</th></tr></thead><tbody>${shown.map((row, index) => { const date = Object.entries(row).find(([key, value]) => key.endsWith('_date') && value)?.[1] || '—'; const details = Object.entries(row).filter(([key]) => !['id', 'academic_year', 'created_at', 'updated_at', 'title', 'paper_title', 'project_title'].includes(key) && !key.endsWith('_date')).slice(0, 3).map(([key, value]) => `${titleCase(key)}: ${Array.isArray(value) ? value.join(', ') : value}`).join(' · '); return `<tr><td>${escapeHtml(rowTitle(row, slug))}${row._kind ? `<small>${row._kind}</small>` : ''}</td><td>${escapeHtml(details)}</td><td>${escapeHtml(date)}</td><td class="td-actions"><button class="btn btn-outline btn-sm" data-action="view" data-index="${index}">View</button><button class="btn btn-outline btn-sm" data-action="edit" data-index="${index}">Edit</button><button class="btn btn-danger btn-sm" data-action="delete" data-index="${index}">Delete</button></td></tr>` }).join('')}</tbody></table></div>` : '<div class="empty-state">No matching records for this academic year.</div>'}<div class="pagination"><button class="btn btn-outline btn-sm" data-action="previous" ${state.page === 1 ? 'disabled' : ''}>Previous</button><span>Page ${state.page} of ${pages}</span><button class="btn btn-outline btn-sm" data-action="next" ${state.page === pages ? 'disabled' : ''}>Next</button></div></section></main>`, true)
+    app.innerHTML = shell(`<main class="container"><section class="page-hero action-heading"><div><h1>${category.short} — ${year}</h1><p>${filtered.length} record${filtered.length === 1 ? '' : 's'} (database query is restricted to this academic year)</p></div>${back('/admin/dashboard')}</section><section class="records-card"><div class="toolbar"><input id="record-search" type="search" placeholder="Search this academic year" value="${escapeHtml(state.query)}"><button class="btn btn-outline btn-sm" data-action="sort">${state.sort === 'newest' ? 'Newest first' : 'Oldest first'}</button><button class="btn btn-success btn-sm" id="dl-all-btn" style="margin-left:auto">⬇ Download All (${filtered.length})</button></div>${shown.length ? `<div class="table-wrap"><table><thead><tr><th>Record</th><th>Details</th><th>Date</th><th>Actions</th></tr></thead><tbody>${shown.map((row, index) => { const date = Object.entries(row).find(([key, value]) => key.endsWith('_date') && value)?.[1] || '—'; const details = Object.entries(row).filter(([key]) => !['id', 'academic_year', 'created_at', 'updated_at', 'title', 'paper_title', 'project_title'].includes(key) && !key.endsWith('_date')).slice(0, 3).map(([key, value]) => `${titleCase(key)}: ${Array.isArray(value) ? value.join(', ') : value}`).join(' · '); return `<tr><td>${escapeHtml(rowTitle(row, slug))}${row._kind ? `<small>${row._kind}</small>` : ''}</td><td>${escapeHtml(details)}</td><td>${escapeHtml(date)}</td><td class="td-actions"><button class="btn btn-outline btn-sm" data-action="view" data-index="${index}">View</button><button class="btn btn-outline btn-sm" data-action="edit" data-index="${index}">Edit</button><button class="btn btn-success btn-sm" data-action="download" data-index="${index}" title="Download this record">⬇</button><button class="btn btn-danger btn-sm" data-action="delete" data-index="${index}">Delete</button></td></tr>` }).join('')}</tbody></table></div>` : '<div class="empty-state">No matching records for this academic year.</div>'}<div class="pagination"><button class="btn btn-outline btn-sm" data-action="previous" ${state.page === 1 ? 'disabled' : ''}>Previous</button><span>Page ${state.page} of ${pages}</span><button class="btn btn-outline btn-sm" data-action="next" ${state.page === pages ? 'disabled' : ''}>Next</button></div></section></main>`, true)
     document.querySelector('#record-search').addEventListener('input', (event) => { state.query = event.target.value; state.page = 1; paint() })
     app.querySelector('[data-action="sort"]').onclick = () => { state.sort = state.sort === 'newest' ? 'oldest' : 'newest'; paint() }
     app.querySelector('[data-action="previous"]').onclick = () => { state.page--; paint() }; app.querySelector('[data-action="next"]').onclick = () => { state.page++; paint() }
     app.querySelectorAll('[data-action="view"]').forEach((button) => { button.onclick = () => viewRecord(shown[Number(button.dataset.index)]) })
     app.querySelectorAll('[data-action="edit"]').forEach((button) => { button.onclick = () => { const row = shown[Number(button.dataset.index)]; openAdminEdit(year, slug, row) } })
     app.querySelectorAll('[data-action="delete"]').forEach((button) => { button.onclick = () => deleteRecord(year, slug, shown[Number(button.dataset.index)]) })
+    /* single-record download */
+    app.querySelectorAll('[data-action="download"]').forEach((button) => { button.onclick = () => downloadSingleRecord(shown[Number(button.dataset.index)], slug, year) })
+    /* download-all (filtered set) */
+    const dlAllBtn = document.querySelector('#dl-all-btn')
+    if (dlAllBtn) { dlAllBtn.onclick = function() { const label = categoryLabel(slug); downloadXlsx(filtered, label, `${year}_${label}_filtered.xlsx`) } }
   }
   paint()
 }
