@@ -455,34 +455,61 @@ function sanitiseRows(rows) {
     const out = {}
     Object.entries(row).forEach(([k, v]) => {
       if (['id', 'created_at', 'updated_at'].includes(k)) return
-      out[titleCase(k)] = Array.isArray(v) ? v.join(', ') : (v ?? '')
+      const outputKey = k === '_kind' ? 'Type' : titleCase(k)
+      const outputValue = k === '_kind'
+        ? fdpDisplayName(v)
+        : (Array.isArray(v) ? v.join(', ') : (v ?? ''))
+      out[outputKey] = outputValue
     })
     return out
   })
 }
 
+/* Excel-safe names: worksheet names cannot contain : \ / ? * [ ] and filenames should not contain path separators. */
+function safeExcelSheetName(name, fallback = 'Records') {
+  const cleaned = String(name || fallback).replace(/[\\/:?*\[\]]/g, ' - ').replace(/\s+/g, ' ').trim()
+  return (cleaned || fallback).slice(0, 31)
+}
+
+function safeDownloadFilename(name, fallback = 'download.xlsx') {
+  let cleaned = String(name || fallback).replace(/[<>:\"/\\|?*\x00-\x1F]/g, '_').replace(/\s+/g, ' ').trim()
+  if (!/\.xlsx$/i.test(cleaned)) cleaned += '.xlsx'
+  return cleaned || fallback
+}
+
 function downloadXlsx(rows, sheetName, filename) {
   if (!rows || rows.length === 0) { alert('No records found for the selected filter.'); return }
+  if (typeof XLSX === 'undefined' || !XLSX.utils || typeof XLSX.writeFile !== 'function') {
+    alert('Excel download is unavailable because the Excel library did not load. Please refresh the page and try again.')
+    return
+  }
+  const cleanedRows = sanitiseRows(rows)
   const wb = XLSX.utils.book_new()
-  const ws = XLSX.utils.json_to_sheet(sanitiseRows(rows))
+  const ws = XLSX.utils.json_to_sheet(cleanedRows)
   /* auto column widths */
-  const keys = Object.keys(sanitiseRows([rows[0]])[0])
+  const keys = Object.keys(cleanedRows[0] || {})
   ws['!cols'] = keys.map((k) => ({ wch: Math.min(50, Math.max(k.length + 2, 14)) }))
-  XLSX.utils.book_append_sheet(wb, ws, sheetName.slice(0, 31))
-  XLSX.writeFile(wb, filename)
+  XLSX.utils.book_append_sheet(wb, ws, safeExcelSheetName(sheetName))
+  XLSX.writeFile(wb, safeDownloadFilename(filename))
 }
 
 async function fetchAllForSlug(slug, year) {
   if (slug === 'fdp-training') {
-    const [c, a] = await Promise.all(['conducted', 'attended'].map(async (kind) => {
-      const { data } = await supabaseClient.from(schemas[kind].table).select('*').eq('academic_year', year).order('created_at', { ascending: false })
+    const results = await Promise.all(['conducted', 'attended'].map(async (kind) => {
+      const { data, error } = await supabaseClient
+        .from(schemas[kind].table)
+        .select('*')
+        .eq('academic_year', year)
+        .order('created_at', { ascending: false })
+      if (error) throw new Error(`${fdpDisplayName(kind)} records: ${error.message}`)
       return (data || []).map((r) => ({ ...r, _kind: kind }))
     }))
-    return [...c, ...a]
+    return [...results[0], ...results[1]]
   }
   const schema = schemas[slug]
   if (!schema) return []
-  const { data } = await supabaseClient.from(schema.table).select('*').eq('academic_year', year).order('created_at', { ascending: false })
+  const { data, error } = await supabaseClient.from(schema.table).select('*').eq('academic_year', year).order('created_at', { ascending: false })
+  if (error) throw new Error(error.message)
   return data || []
 }
 
@@ -506,6 +533,8 @@ async function downloadCategoryYear(slug, year, btnEl) {
     const rows = await fetchAllForSlug(slug, year)
     const label = categoryLabel(slug)
     downloadXlsx(rows, label, `${year}_${label}.xlsx`)
+  } catch (error) {
+    alert(`Download failed: ${error.message || 'Unable to fetch records.'}`)
   } finally {
     btnEl.disabled = false
     btnEl.textContent = orig
@@ -518,19 +547,25 @@ async function downloadFullYear(year, btnEl) {
   const orig = btnEl.textContent
   btnEl.innerHTML = '<span class="spinner"></span> Downloading…'
   try {
+    if (typeof XLSX === 'undefined' || !XLSX.utils || typeof XLSX.writeFile !== 'function') {
+      throw new Error('Excel library did not load. Please refresh the page and try again.')
+    }
     const wb = XLSX.utils.book_new()
     let anyData = false
     for (const cat of categories) {
       const rows = await fetchAllForSlug(cat.slug, year)
       if (rows.length === 0) continue
       anyData = true
-      const ws = XLSX.utils.json_to_sheet(sanitiseRows(rows))
-      const keys = Object.keys(sanitiseRows([rows[0]])[0])
+      const cleanedRows = sanitiseRows(rows)
+      const ws = XLSX.utils.json_to_sheet(cleanedRows)
+      const keys = Object.keys(cleanedRows[0] || {})
       ws['!cols'] = keys.map((k) => ({ wch: Math.min(50, Math.max(k.length + 2, 14)) }))
-      XLSX.utils.book_append_sheet(wb, ws, cat.short.slice(0, 31))
+      XLSX.utils.book_append_sheet(wb, ws, safeExcelSheetName(cat.short))
     }
     if (!anyData) { alert('No records found for ' + year + '.'); return }
-    XLSX.writeFile(wb, `${year}_All_Records.xlsx`)
+    XLSX.writeFile(wb, safeDownloadFilename(`${year}_All_Records.xlsx`))
+  } catch (error) {
+    alert(`Download failed: ${error.message || 'Unable to create the Excel file.'}`)
   } finally {
     btnEl.disabled = false
     btnEl.textContent = orig
