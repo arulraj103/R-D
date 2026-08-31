@@ -223,10 +223,10 @@ const schemas = {
   consultancy: { table: 'consultancy_projects', title: 'Consultancy Project', dates: ['start_date', 'complete_date'], fields: [
     ['client_industry', 'Client / Industry', 'text', true], ['project_title', 'Consultancy Project Title', 'text', true], ['faculty_involved', 'Faculty Involved', 'text', true], ['start_date', 'Start Date', 'date', true], ['complete_date', 'Complete Date', 'date', false], ['amount', 'Amount', 'number', true, null, { min: 0, step: '0.01' }], ['status', 'Status', 'select', true, ['Completed', 'Ongoing']], ['completion_certificate', 'Completion Certificate', 'select', true, ['Yes', 'No']],
   ] },
-  conducted: { table: 'fdp_attended', title: 'Conducted FDP / Workshop', dates: ['event_date'], fields: [
+  conducted: { table: 'fdp_attended', title: 'attended FDP/Workshop', dates: ['event_date'], fields: [
     ['faculty_name', 'Faculty Name', 'text', true], ['title', 'FDP / Workshop Title', 'text', true], ['organizing_institution', 'Organizing Institution', 'text', true], ['duration', 'Duration', 'text', true], ['event_date', 'Date', 'date', true], ['mode', 'Mode', 'select', true, ['Online', 'Offline']], ['certificate', 'Certificate', 'select', true, ['Yes', 'No']],
   ] },
-  attended: { table: 'fdp_conducted', title: 'Attended FDP / Workshop', dates: ['event_date'], fields: [
+  attended: { table: 'fdp_conducted', title: 'Conducted FDP / Workshop', dates: ['event_date'], fields: [
     ['title', 'FDP / Workshop Title', 'text', true], ['organizing_institution', 'Organizing Institution', 'text', true], ['duration', 'Duration', 'text', true], ['event_date', 'Date', 'date', true], ['number_of_days', 'Number of Days', 'number', true, null, { min: 1, step: '1' }], ['number_of_participants', 'Number of Participants', 'number', true, null, { min: 1, step: '1' }], ['funded_by', 'Funded By', 'text', true], ['mode', 'Mode', 'select', true, ['Online', 'Offline']],
   ] },
   'student-publications': { table: 'student_publications', title: 'Student Publication', dates: ['publication_date'], fields: [
