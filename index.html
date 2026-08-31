@@ -287,7 +287,7 @@ function categoryPage(year) {
 
 function fdpChoice(year) {
   if (!isAcademicYear(year)) return invalidYear(year)
-  app.innerHTML = shell(`<main class="container-sm"><section class="page-hero action-heading"><div><h1>FDPs / Workshops / Training</h1><p>${year}</p></div>${back(`/academic-year/${year}`)}</section><section class="category-grid two"><button class="category-card" data-go="/academic-year/${year}/fdp-training/conducted"><strong>Conducted</strong><span>Register a programme conducted by faculty →</span></button><button class="category-card" data-go="/academic-year/${year}/fdp-training/attended"><strong>Attended</strong><span>Register programme attendance →</span></button></section></main>`)
+  app.innerHTML = shell(`<main class="container-sm"><section class="page-hero action-heading"><div><h1>FDPs / Workshops / Training</h1><p>${year}</p></div>${back(`/academic-year/${year}`)}</section><section class="category-grid two"><button class="category-card" data-go="/academic-year/${year}/fdp-training/conducted"><strong>Attended</strong><span>Register a programme conducted by faculty →</span></button><button class="category-card" data-go="/academic-year/${year}/fdp-training/attended"><strong>Conducted</strong><span>Register programme attendance →</span></button></section></main>`)
 }
 
 function fieldMarkup(field, value) {
